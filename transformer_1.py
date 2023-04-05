@@ -1,6 +1,9 @@
-#transformer复现
+# transformer复现
 import torch
 from torch import nn
+
+print(torch.__version__)
+print(torch.cuda.is_available())
 
 # -------------------------------------------------- #
 # （1）muti_head_attention
@@ -325,7 +328,13 @@ class Transformer(nn.Module):
     # 构造mask
     def make_src_mask(self, src):
         # [N,src_len]==>[N,1,1,src_len]
+        # print('到这了=======def make_src_mask(self, src):')
         src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2)
+        # print('到这了=======src_mask = (src !')
+        print("下面这步卡住？？？？？？？-----------")
+        print('src_mask==========', src_mask, type(src_mask))
+        src_mask.to(self.device)
+        print("上面这步没有卡住-----------")
         return src_mask.to(self.device)
 
     def make_trg_mask(self, trg):
@@ -338,7 +347,10 @@ class Transformer(nn.Module):
     # 前向传播
     def forward(self, src, trg):
         # 对输入句子构造mask
+        # print('到这里卡住了111111111111111111')
+        # print('src================',src,type(src))
         src_mask = self.make_src_mask(src)
+        # print('=================src_mask = self.make_src_mask(src)')
         # 对目标句子构造mask
         trg_mask = self.make_trg_mask(trg)
 
@@ -356,11 +368,17 @@ if __name__ == '__main__':
     # 电脑上有GPU就调用它，没有就用CPU
     # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
+    # print(device)
+    # print(type(device))
 
     # 输入
     x = torch.tensor([[1, 5, 6, 4, 3, 9, 5, 2, 0], [1, 8, 7, 3, 4, 5, 6, 7, 2]]).to(device)
+    print('xxxxxx=================', x, type(x))
+    # print(type(x))
     # 目标
     trg = torch.tensor([[1, 7, 4, 3, 5, 9, 2, 0], [1, 5, 6, 2, 4, 7, 6, 2]]).to(device)
+    # print(trg)
+    # print(type(trg))
 
     src_vocab_size = 10  # 输入句子的长度
     trg_vocab_size = 10  # 目标句子的长度
@@ -370,10 +388,13 @@ if __name__ == '__main__':
 
     # 接收模型
     model = Transformer(src_vocab_size, trg_vocab_size, src_pad_idx, trg_pad_idx)
+    # print('model1111111111111111111', type(model))
     model = model.to(device)
+    # print('model22222222222222222222', type(model))
 
     # 前向传播，参数：输入句子和目标句子
     out = model(x, trg[:, :-1])  # 预测最后一个句子
+    print('out================', out, type(out))
 
     print(out.shape)
     # torch.Size([2, 7, 10])
