@@ -299,7 +299,8 @@ class Transformer(nn.Module):
                  forward_expansion=4,
                  heads=8,
                  dropout=0,
-                 device='cuda',
+                 # device='cuda',
+                 device='cpu',
                  max_len=100):
         super(Transformer, self).__init__()
 
@@ -329,12 +330,17 @@ class Transformer(nn.Module):
     def make_src_mask(self, src):
         # [N,src_len]==>[N,1,1,src_len]
         # print('到这了=======def make_src_mask(self, src):')
+        # print('self======', self, type(self))
+        # print('self.src_pad_idx======', self.src_pad_idx, type(self.src_pad_idx))
+        # print('src========', src, type(src))
+        # a = (src != self.src_pad_idx)
+        # print(a)
         src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2)
         # print('到这了=======src_mask = (src !')
-        print("下面这步卡住？？？？？？？-----------")
-        print('src_mask==========', src_mask, type(src_mask))
+        # print("下面这步卡住？？？？？？？-----------")
+        # print('src_mask==========', src_mask, type(src_mask))
         src_mask.to(self.device)
-        print("上面这步没有卡住-----------")
+        # print("上面这步没有卡住-----------")
         return src_mask.to(self.device)
 
     def make_trg_mask(self, trg):
@@ -373,7 +379,19 @@ if __name__ == '__main__':
 
     # 输入
     x = torch.tensor([[1, 5, 6, 4, 3, 9, 5, 2, 0], [1, 8, 7, 3, 4, 5, 6, 7, 2]]).to(device)
-    print('xxxxxx=================', x, type(x))
+    # print('xxxxxx=================', x, type(x))
+    # x.unsqueeze(2)
+    # a = torch.rand(5)
+    # b = a.unsqueeze(1)
+    # c = b.unsqueeze(2)
+    # d = b.unsqueeze(0)
+    # print(a)
+    # print(b)
+    # print(c)
+    # print(d)
+    # # a.shape
+    # # print(a.sh
+    # print('unsqueeze之后=======',x,type(x))
     # print(type(x))
     # 目标
     trg = torch.tensor([[1, 7, 4, 3, 5, 9, 2, 0], [1, 5, 6, 2, 4, 7, 6, 2]]).to(device)
