@@ -165,7 +165,7 @@ def subsequent_mask(size):
 
 plt.figure(figsize=(5, 5))
 plt.imshow(subsequent_mask(20)[0])
-None
+# None
 
 
 # attention
@@ -270,7 +270,7 @@ pe = PositionalEncoding(20, 0)
 y = pe.forward(Variable(torch.zeros(1, 100, 20)))
 plt.plot(np.arange(100), y[0, :, 4:8].data.numpy())
 plt.legend(["dim %d" % p for p in [4, 5, 6, 7]])
-None
+# None
 
 
 # Full Model
@@ -299,7 +299,7 @@ def make_model(src_vocab, tgt_vocab, N=6,
 
 # Small example model.
 tmp_model = make_model(10, 10, 2)
-None
+# None
 
 
 # Training
@@ -407,7 +407,7 @@ opts = [NoamOpt(512, 1, 4000, None),
         NoamOpt(256, 1, 4000, None)]
 plt.plot(np.arange(1, 20000), [[opt.rate(i) for opt in opts] for i in range(1, 20000)])
 plt.legend(["512:4000", "512:8000", "256:4000"])
-None
+# None
 
 
 # Regularization
@@ -447,22 +447,20 @@ v = crit(Variable(predict.log()),
 
 # Show the target distributions expected by the system.
 plt.imshow(crit.true_dist)
-None
+# None
 
-crit = LabelSmoothing(5, 0, 0.1)
-
-
-def loss(x):
-    d = x + 3 * 1
-    predict = torch.FloatTensor([[0, x / d, 1 / d, 1 / d, 1 / d],
-                                 ])
-    # print(predict)
-    return crit(Variable(predict.log()),
-                Variable(torch.LongTensor([1]))).data[0]
-
-
-plt.plot(np.arange(1, 100), [loss(x) for x in range(1, 100)])
-None
+# crit = LabelSmoothing(5, 0, 0.1)
+# def loss(x):
+#     d = x + 3 * 1
+#     predict = torch.FloatTensor([[0, x / d, 1 / d, 1 / d, 1 / d],
+#                                  ])
+#     # print(predict)
+#     return crit(Variable(predict.log()),
+#                 Variable(torch.LongTensor([1]))).data[0]
+# 
+#
+# plt.plot(np.arange(1, 100), [loss(x) for x in range(1, 100)])
+# None
 
 
 # A First Example
