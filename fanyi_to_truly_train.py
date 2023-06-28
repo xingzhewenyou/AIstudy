@@ -163,8 +163,8 @@ def subsequent_mask(size):
     return torch.from_numpy(subsequent_mask) == 0
 
 
-plt.figure(figsize=(5, 5))
-plt.imshow(subsequent_mask(20)[0])
+# plt.figure(figsize=(5, 5))
+# plt.imshow(subsequent_mask(20)[0])
 
 
 # None
@@ -267,11 +267,11 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
-plt.figure(figsize=(15, 5))
-pe = PositionalEncoding(20, 0)
-y = pe.forward(Variable(torch.zeros(1, 100, 20)))
-plt.plot(np.arange(100), y[0, :, 4:8].data.numpy())
-plt.legend(["dim %d" % p for p in [4, 5, 6, 7]])
+# plt.figure(figsize=(15, 5))
+# pe = PositionalEncoding(20, 0)
+# y = pe.forward(Variable(torch.zeros(1, 100, 20)))
+# plt.plot(np.arange(100), y[0, :, 4:8].data.numpy())
+# plt.legend(["dim %d" % p for p in [4, 5, 6, 7]])
 
 
 # None
@@ -407,12 +407,12 @@ def get_std_opt(model):
                    torch.optim.Adam(model.parameters(), lr=0, betas=(0.9, 0.98), eps=1e-9))
 
 
-# Three settings of the lrate hyperparameters.
-opts = [NoamOpt(512, 1, 4000, None),
-        NoamOpt(512, 1, 8000, None),
-        NoamOpt(256, 1, 4000, None)]
-plt.plot(np.arange(1, 20000), [[opt.rate(i) for opt in opts] for i in range(1, 20000)])
-plt.legend(["512:4000", "512:8000", "256:4000"])
+# # Three settings of the lrate hyperparameters.
+# opts = [NoamOpt(512, 1, 4000, None),
+#         NoamOpt(512, 1, 8000, None),
+#         NoamOpt(256, 1, 4000, None)]
+# plt.plot(np.arange(1, 20000), [[opt.rate(i) for opt in opts] for i in range(1, 20000)])
+# plt.legend(["512:4000", "512:8000", "256:4000"])
 
 
 # None
@@ -445,16 +445,16 @@ class LabelSmoothing(nn.Module):
         return self.criterion(x, Variable(true_dist, requires_grad=False))
 
 
-# Example of label smoothing.
-crit = LabelSmoothing(5, 0, 0.4)
-predict = torch.FloatTensor([[0, 0.2, 0.7, 0.1, 0],
-                             [0, 0.2, 0.7, 0.1, 0],
-                             [0, 0.2, 0.7, 0.1, 0]])
-v = crit(Variable(predict.log()),
-         Variable(torch.LongTensor([2, 1, 0])))
-
-# Show the target distributions expected by the system.
-plt.imshow(crit.true_dist)
+# # Example of label smoothing.
+# crit = LabelSmoothing(5, 0, 0.4)
+# predict = torch.FloatTensor([[0, 0.2, 0.7, 0.1, 0],
+#                              [0, 0.2, 0.7, 0.1, 0],
+#                              [0, 0.2, 0.7, 0.1, 0]])
+# v = crit(Variable(predict.log()),
+#          Variable(torch.LongTensor([2, 1, 0])))
+#
+# # Show the target distributions expected by the system.
+# plt.imshow(crit.true_dist)
 
 
 # None
@@ -640,24 +640,24 @@ valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=0,
                         repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
                         batch_size_fn=batch_size_fn, train=False)
 
-for i, batch in enumerate(valid_iter):
-    src = batch.src.transpose(0, 1)[:1]
-    src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
-    out = greedy_decode(model, src, src_mask,
-                        max_len=60, start_symbol=TGT.vocab.stoi["<s>"])
-    print("Translation:", end="\t")
-    for i in range(1, out.size(1)):
-        sym = TGT.vocab.itos[out[0, i]]
-        if sym == "</s>": break
-        print(sym, end=" ")
-    print()
-    print("Target:", end="\t")
-    for i in range(1, batch.trg.size(0)):
-        sym = TGT.vocab.itos[batch.trg.data[i, 0]]
-        if sym == "</s>": break
-        print(sym, end=" ")
-    print()
-    break
+# for i, batch in enumerate(valid_iter):
+#     src = batch.src.transpose(0, 1)[:1]
+#     src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
+#     out = greedy_decode(model, src, src_mask,
+#                         max_len=60, start_symbol=TGT.vocab.stoi["<s>"])
+#     print("Translation:", end="\t")
+#     for i in range(1, out.size(1)):
+#         sym = TGT.vocab.itos[out[0, i]]
+#         if sym == "</s>": break
+#         print(sym, end=" ")
+#     print()
+#     print("Target:", end="\t")
+#     for i in range(1, batch.trg.size(0)):
+#         sym = TGT.vocab.itos[batch.trg.data[i, 0]]
+#         if sym == "</s>": break
+#         print(sym, end=" ")
+#     print()
+#     break
 
 # 通过上一节中的附加扩展，OpenNMT-py 复制在 EN-DE WMT 上达到 26.9。在这里，我已将这些参数加载到我们的重新实现中。
 model, SRC, TGT = torch.load("/Users/zhangwenyou/PycharmProjects/AIstudy/.data/iwslt/en-de-model.pt")
@@ -680,34 +680,5 @@ print(trans)
 
 tgt_sent = trans.split()
 
-
-# # 注意力可视化
-# def draw(data, x, y, ax):
-#     seaborn.heatmap(data,
-#                     xticklabels=x, square=True, yticklabels=y, vmin=0.0, vmax=1.0,
-#                     cbar=False, ax=ax)
-#
-#
-# for layer in range(1, 6, 2):
-#     fig, axs = plt.subplots(1, 4, figsize=(20, 10))
-#     print("Encoder Layer", layer + 1)
-#     for h in range(4):
-#         draw(model.encoder.layers[layer].self_attn.attn[0, h].data,
-#              sent, sent if h == 0 else [], ax=axs[h])
-#     plt.show()
-#
-# for layer in range(1, 6, 2):
-#     fig, axs = plt.subplots(1, 4, figsize=(20, 10))
-#     print("Decoder Self Layer", layer + 1)
-#     for h in range(4):
-#         draw(model.decoder.layers[layer].self_attn.attn[0, h].data[:len(tgt_sent), :len(tgt_sent)],
-#              tgt_sent, tgt_sent if h == 0 else [], ax=axs[h])
-#     plt.show()
-#     print("Decoder Src Layer", layer + 1)
-#     fig, axs = plt.subplots(1, 4, figsize=(20, 10))
-#     for h in range(4):
-#         draw(model.decoder.layers[layer].self_attn.attn[0, h].data[:len(tgt_sent), :len(sent)],
-#              sent, tgt_sent if h == 0 else [], ax=axs[h])
-#     plt.show()
 
 print('恭喜，第一个人工智能模仿学习通关了！！！！！！！')
