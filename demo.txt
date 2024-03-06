@@ -1,0 +1,6 @@
+240306
+需要切换pycharm用户，在terminal执行
+# 在当前 Git 仓库中设置用户名和邮箱
+git config --local user.name "Your Name"
+git config --local user.email "your.email@example.com"
+顺便看一下提交人是谁，之前的git历史里面还有运荔枝的邮箱账号，预期只有QQ邮箱账号
