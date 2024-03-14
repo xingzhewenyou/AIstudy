@@ -7,3 +7,6 @@ git config --local user.email "your.email@example.com"
 
 240314
 今天处理2个项目2个git账号
+打开第2个项目窗口，直接terminal执行git config --global user.name "zhangwenyou_ylz"
+git config --global user.email "zhangwenyou_ylz@newhope.cn"
+然后现在第1个项目窗口，提交代码，应该还是QQ邮箱的
