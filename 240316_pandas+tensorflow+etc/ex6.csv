@@ -1,0 +1,9 @@
+# <class 'pandas.core.frame.DataFrame'>
+# Int64Index:10000 entries, 0 to 9999
+# Data columns:
+# one     10000    non-null       values
+# two     10000    non-null       values
+# three     10000    non-null       values
+# four     10000    non-null       values
+# key     10000    non-null       values
+# dtypes: float64(4),object(1)

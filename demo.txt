@@ -13,3 +13,20 @@
 # 还是不行，统一成公司账号了，行吧，先用吧
 
 240316公司更新
+
+
+240316家里
+1---项目解释器和terminal解释器不一样，需要激活terminal解释器
+打开 terminal。
+运行以下命令，进入到你的项目目录：
+bash
+Copy code
+cd AIstudy
+运行以下命令，激活项目的虚拟环境：
+bash
+Copy code
+source venv/bin/activate
+如果你使用的是 Windows 平台，激活命令可能会有所不同。你可以尝试以下命令：
+Copy code
+venv\Scripts\activate
+确认你已经切换到了项目的虚拟环境。在 terminal 中输入 python --version 并确认显示的 Python 版本与你项目中配置的 Python 版本相匹配。
