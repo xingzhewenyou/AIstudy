@@ -30,3 +30,5 @@ source venv/bin/activate
 Copy code
 venv\Scripts\activate
 确认你已经切换到了项目的虚拟环境。在 terminal 中输入 python --version 并确认显示的 Python 版本与你项目中配置的 Python 版本相匹配。
+
+240316公司里面运行了一遍pandas，基础模式就是这样，家里和公司同时开发，迅速了解最基础的用法
