@@ -1,0 +1,12 @@
+TensorFlow和Keras是什么关系
+
+ChatGPT
+TensorFlow和Keras之间的关系可以描述为以下几点：
+
+Keras是一个高级神经网络API：Keras最初是由François Chollet开发的，它提供了一种简单而高效的方法来构建和训练神经网络模型。Keras提供了一套简洁的、用户友好的接口，使得在构建神经网络时更加容易。
+
+Keras整合到TensorFlow中：由于Keras的简单易用性，它在机器学习社区中广受欢迎。因此，Google决定将Keras整合到TensorFlow中作为TensorFlow的高级API。这意味着你可以使用TensorFlow的强大功能，同时利用Keras简洁的API来构建神经网络模型。
+
+Keras作为TensorFlow的默认高级API：自TensorFlow 2.0版本开始，Keras被正式成为TensorFlow的高级API。这意味着你可以通过导入tensorflow.keras来使用Keras，而不需要额外安装Keras库。TensorFlow中的tf.keras模块提供了与独立Keras库几乎相同的功能，但它与TensorFlow完全集成，可以更好地与TensorFlow的其他部分配合使用。
+
+总之，TensorFlow和Keras是紧密相关的，Keras是TensorFlow的一部分，它提供了一种更简单、更易用的方式来构建和训练神经网络模型。

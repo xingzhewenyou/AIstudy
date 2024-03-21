@@ -68,7 +68,7 @@ if __name__ == "__main__":
     type = 'feishu'
     if type == 'feishu':
         # 飞书点击
-        for i in range(200):
+        for i in range(20):
             auto_click_1()
             print("点击轮次======", i + 1)
     elif type == 'huopin':
