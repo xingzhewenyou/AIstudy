@@ -1,3 +1,4 @@
 .data/
-venv/
+.venv/
 .idea/
+240316_pandas+tensorflow+etc/my_dir/
