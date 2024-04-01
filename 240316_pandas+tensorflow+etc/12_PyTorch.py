@@ -14,16 +14,27 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+import torch.optim as optim
+import matplotlib.pyplot as plt
+import numpy as np
+
+import torch.nn as nn
+import torch.nn.functional as F
+import multiprocessing
+
+
+
+
+
+
 # torchvision 数据集加载完后的输出是范围在 [ 0, 1 ] 之间的 PILImage。我们将其标准化为范围在 [ -1, 1 ] 之间的张量。
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2)
-
 
 # testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
 # testloader = torch.utils.data.DataLoader(testset, batch_size=4, shuffle=False, num_workers=2)
@@ -31,9 +42,6 @@ trainloader = torch.utils.data.DataLoader(trainset, batch_size=4, shuffle=True, 
 
 classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 # ## 输出图像的函数
@@ -56,11 +64,6 @@ import numpy as np
 # 2.定义一个卷积神经网络
 # 将之前神经网络章节定义的神经网络拿过来，并将其修改成输入为3通道图像(替代原来定义的单通道图像）。
 
-import torch.nn as nn
-import torch.nn.functional as F
-
-
-
 
 class Net(nn.Module):
     def __init__(self):
@@ -72,7 +75,6 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
-
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
@@ -83,13 +85,9 @@ class Net(nn.Module):
         return x
 
 
-
-
 net = Net()
 # 3.定义损失函数和优化器
 # 我们使用多分类的交叉熵损失函数和随机梯度下降优化器(使用 momentum ）。
-
-import torch.optim as optim
 
 
 criterion = nn.CrossEntropyLoss()
@@ -99,16 +97,14 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
 for epoch in range(2):  # loop over the dataset multiple times
 
-
     running_loss = 0.0
+    multiprocessing.freeze_support()
     for i, data in enumerate(trainloader, 0):
         # get the inputs
         inputs, labels = data
 
-
         # zero the parameter gradients
         optimizer.zero_grad()
-
 
         # forward + backward + optimize
         outputs = net(inputs)
@@ -116,12 +112,14 @@ for epoch in range(2):  # loop over the dataset multiple times
         loss.backward()
         optimizer.step()
 
-
         # print statistics
         running_loss += loss.item()
-        if i % 2000 == 1999:    # print every 2000 mini-batches
+        if i % 2000 == 1999:  # print every 2000 mini-batches
             print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 2000))
             running_loss = 0.0
 
-
 print('Finished Training')
+
+# if __name__ == '__main__':
+
+    
