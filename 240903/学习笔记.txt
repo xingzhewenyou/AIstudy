@@ -53,7 +53,8 @@ TQQQ+LLP+LLM
 工作开始
 1008
 从事最难的工作，最快的学习
-
+pycharm专业版每月需要100，先不买，先用WPS代替笔记，最小系统
+手搓10个开源项目，就从https://github.com/liguodongiot/llm-action开始
 
 
 
