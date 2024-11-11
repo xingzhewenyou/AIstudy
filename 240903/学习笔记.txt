@@ -109,6 +109,8 @@ docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-
 也许可以应聘招行的大模型？
 1106
 先浏览各种书，开源项目，东丞说的比赛
+1111
+招行大模型？
 
 
 
