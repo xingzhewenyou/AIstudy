@@ -119,6 +119,8 @@ docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-
 周末
 1118
 xcode可以用copilot吗？
+1120
+还是要多实际编程，哪怕每天只有半小时
 
 
 
